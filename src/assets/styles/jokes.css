@@ -1,0 +1,72 @@
+.joke-container {
+  height: 60vh;
+  width: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+}
+
+.card {
+  max-width: 600px;
+  margin: auto;
+}
+
+.card-header {
+  font-weight: 600;
+  text-align: center;
+}
+
+.card-title {
+  font-size: xxx-large;
+  text-align: center;
+  margin-bottom: 10%;
+}
+
+.card-text > * {
+  display: block;
+}
+
+.answer {
+  margin: 5% 0;
+}
+
+.answer.hidden {
+  margin: 5% 0;
+  padding: 5% 0;
+  text-align: center;
+  background-color: whitesmoke;
+  opacity: 0.2;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn {
+  height: 60px;
+  width: 45%;
+  font-weight: 500;
+}
+
+/* Components animations */
+.component-enter {
+  opacity: 0;
+}
+
+.component-enter-active {
+  opacity: 1;
+  transition: opacity 1000ms;
+}
+
+.component-exit {
+  opacity: 1;
+}
+
+.component-exit-active {
+  opacity: 0;
+  transition: opacity 500ms;
+}
