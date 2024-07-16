@@ -12,7 +12,7 @@ export default function Authors() {
 
   const fetchAuthors = async () => {
     try {
-      const f = await fetch('https://127.0.0.1:8000/api/authors');
+      const f = await fetch('https://salaha-sokhona-jokes-api-f5beaadaebe1.herokuapp.com/api/authors');
       const response = await f.json();
       setAuthors(response['hydra:member']);
     } catch (error) {

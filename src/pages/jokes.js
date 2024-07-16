@@ -38,7 +38,7 @@ export default function Jokes() {
     // Cas 1 : pas de paramètre renseigné donc blague random
     if (url.pathname === '/jokes') {
       route =
-        'https://127.0.0.1:8000/api/jokes?page=' +
+        'https://salaha-sokhona-jokes-api-f5beaadaebe1.herokuapp.com/api/jokes?page=' +
         page.current +
         '&itemsPerPage=' +
         itemsPerPage;
@@ -47,7 +47,7 @@ export default function Jokes() {
     // Cas 2 : paramètre de l'auteur renseigné dans l'url DONC blague reliée à un auteur
     else {
       authorId = url.href.split('/')[4];
-      route = 'https://127.0.0.1:8000/api/authors/' + authorId + '?jokes';
+      route = 'https://salaha-sokhona-jokes-api-f5beaadaebe1.herokuapp.com/api/authors/' + authorId + '?jokes';
     }
 
     try {
