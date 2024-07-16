@@ -1,0 +1,14 @@
+.index {
+  font-size: xx-large;
+  font-weight: 300;
+  margin: 50px 0 10px 0;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+li {
+  list-style: none;
+}

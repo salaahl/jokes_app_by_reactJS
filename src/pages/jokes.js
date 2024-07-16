@@ -1,100 +1,132 @@
 import React, { createRef, useEffect, useRef, useState } from 'react';
-import {
-  Link,
-  useLoaderData,
-  useLocation,
-  useNavigation,
-  useOutlet,
-} from 'react-router-dom';
-import { CSSTransition, SwitchTransition } from 'react-transition-group';
+import { CSSTransition } from 'react-transition-group';
 import '../assets/styles/jokes.css';
-import { routes } from '../index';
-
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faSmile } from '@fortawesome/free-regular-svg-icons';
 
+import Loader from '../components/Loader';
+import EndJokes from '../components/EndJokes';
+
 library.add(faSmile);
 
-let jokesIndexes = [];
-
-export const fetchJokes = async () => {
-  const url = window.location.href;
+export default function Jokes() {
+  const url = window.location;
   let route;
+  let page = useRef(0);
+  const itemsPerPage = 15;
+  let totalItems = useRef(0);
+  let authorId;
 
-  // Cas 1 : paramètre de l'auteur renseigné dans l'url DONC blague reliée à un auteur
-  if (url.split('/')[3] === 'authors') {
-    let authorId = url.split('/')[4];
-    route = 'https://127.0.0.1:8000/api/authors/' + authorId + '?jokes';
-  }
-
-  // Cas 2 : pas de paramètre renseigné donc blague random
-  else {
-    route = 'https://127.0.0.1:8000/api/jokes/';
-  }
-
-  try {
-    const f = await fetch(route);
-    const response = await f.json();
-
-    // Alimentation du jokesIndexes
-    let temp = [];
-    for (let i = 0; i < response.jokes.length; i++) {
-      temp.push(i);
-      // Permet de mélanger les résultats du tableau
-      jokesIndexes = temp.sort((a, b) => 0.5 - Math.random());
-    }
-
-    return response.jokes;
-  } catch (error) {
-    console.error('Erreur lors de la récupération de la blague :', error);
-  }
-};
-
-export function Jokes() {
-  // Le loader data est défini dans la route et va récupérer la fonction fetchJokes en faisant la transition
-  const jokes = useLoaderData();
-  let [index, setIndex] = useState(0);
-  const [joke, setJoke] = useState({});
-  let [answer, setAnswer] = useState(false);
-
-  const [showJoke, setshowJoke] = useState(false);
+  let showLoaderRef = useRef(true);
+  let endRef = useRef(false);
+  const contentRef = createRef();
   const nodeRef = createRef();
 
-  useEffect(() => {
-    setTimeout(() => {
-      if (jokesIndexes.length >= index) {
-        setJoke(jokes[jokesIndexes[index]]);
-      }
-      setshowJoke(true);
-    }, 500);
-  }, [showJoke, jokes, index]);
+  const [jokes, setJokes] = useState([]); // Contient la liste des blagues
+  const [index, setIndex] = useState(0);
+  const [joke, setJoke] = useState({});
+  const [answer, setAnswer] = useState(false);
+  const [showJoke, setShowJoke] = useState(false);
+  const [end, setEnd] = useState(endRef);
 
-  if (index >= jokesIndexes.length) {
+  const fetchJokes = async () => {
+    page.current++;
+
+    // Cas 1 : pas de paramètre renseigné donc blague random
+    if (url.pathname === '/jokes') {
+      route =
+        'https://127.0.0.1:8000/api/jokes?page=' +
+        page.current +
+        '&itemsPerPage=' +
+        itemsPerPage;
+    }
+
+    // Cas 2 : paramètre de l'auteur renseigné dans l'url DONC blague reliée à un auteur
+    else {
+      authorId = url.href.split('/')[4];
+      route = 'https://127.0.0.1:8000/api/authors/' + authorId + '?jokes';
+    }
+
+    try {
+      fetch(route)
+        .then((response) => response.json())
+        .then((data) => {
+          totalItems.current = data.jokes
+            ? data.jokes.length
+            : data['hydra:totalItems'];
+          setJokes(data.jokes ? data.jokes : data['hydra:member']);
+          console.log(data)
+        })
+        .catch((error) => console.log(error));
+    } catch (error) {
+      console.error('Erreur lors de la sélection des blagues :', error);
+    }
+  };
+
+  useEffect(() => {
+    // Sera lancé au chargement de la page et à chaque fois que l'index aura été réinitialisé
+    if (index === 0) {
+      fetchJokes();
+    }
+  }, [index]);
+
+  if (jokes.length !== 0 && jokes.length > index) {
+    // Le timeout a été placé ici pour que l'animation ait le temps d'aller au bout
+    setTimeout(() => {
+      setJoke(jokes[index]);
+      setShowJoke(true);
+    }, 500);
+  }
+
+  // Si toutes les blagues chargées ont déjà été affichées :
+  if (jokes.length !== 0 && index >= jokes.length) {
+    if (url.pathname === '/jokes') {
+      // On remet l'index à 0 et on charge une nouvelle page via le useEffect qui surveille la valeur de l'index
+      setIndex(0);
+    }
+  }
+
+  // Affichage du loader en ouverture de page :
+  if (jokes.length !== 0 && Object.keys(joke).length !== 0) {
+    showLoaderRef.current = false;
+  }
+
+  /*
+   * Stock de blagues terminé même après appel au fetch :
+   * Je multiplie la valeur de la page par le nombre de résultats par page (accès à la page via la route /jokes)
+   * OU
+   * Je compare la valeur de l'index au total des blagues chargées (accès à la page via la route authors/id/jokes)
+   */
+  if (
+    (page.current !== 1 && page.current * itemsPerPage > totalItems.current) ||
+    (index !== 0 && index === totalItems.current)
+  ) {
+    endRef.current = true; // On passe a la fin de partie avec le setEnd
+    // Le timeout a été placé ici pour que l'animation ait le temps d'aller au bout
+    setTimeout(() => {
+      setShowJoke(true); // Affichera en réalité le EndJoke
+    }, 500);
+  }
+
+  if (end.current === true) {
+    return <EndJokes in={showJoke} nodeRef={nodeRef} componentRef={nodeRef} />;
+  }
+
+  if (showLoaderRef.current === true) {
     return (
-      <div>
-        <CSSTransition
-          in={showJoke}
-          nodeRef={nodeRef}
-          timeout={1500}
-          classNames="component"
-          unmountOnExit
-        >
-          <div className="joke-container component" ref={nodeRef}>
-            <div>Vous avez terminé le jeu...</div>
-            <Link to={`/authors`}>Blagues randoms</Link>
-            <Link to={`/authors`}>Aller à la liste des auteurs</Link>
-          </div>
-        </CSSTransition>
-      </div>
+      <Loader
+        in={showLoaderRef.current}
+        contentRef={contentRef}
+        ref={contentRef}
+      />
     );
   }
 
   return (
-    <div>
+    <div ref={contentRef}>
       <div className="joke-container">
         <CSSTransition
           in={showJoke}
@@ -126,7 +158,7 @@ export function Jokes() {
                   onClick={() => [
                     setAnswer(false),
                     setIndex(index + 1),
-                    setshowJoke(false),
+                    setShowJoke(false),
                   ]}
                 >
                   Nouvelle blague

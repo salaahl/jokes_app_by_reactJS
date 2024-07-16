@@ -4,19 +4,13 @@ import { CSSTransition, SwitchTransition } from 'react-transition-group';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
+import Loader from './components/Loader';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faSmile } from '@fortawesome/free-regular-svg-icons';
 
 library.add(faSmile);
-
-function LoadingScreen() {
-  return (
-    <div className="page-loader">
-      <div className="loader"></div>
-    </div>
-  );
-}
 
 export default function App() {
   const location = useLocation();
@@ -51,11 +45,7 @@ export default function App() {
           >
             {(state) => (
               <div ref={nodeRef} className="page">
-                {navigation.state === 'loading' ? (
-                  <LoadingScreen />
-                ) : (
-                  currentOutlet
-                )}
+                {navigation.state === 'loading' ? <Loader /> : currentOutlet}
               </div>
             )}
           </CSSTransition>

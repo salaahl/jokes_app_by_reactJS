@@ -5,10 +5,10 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 
 import App from './App';
-import Home from './pages/home';
-import { fetchAuthors, Authors } from './pages/authors';
-import { fetchJokes, Jokes } from './pages/jokes';
-import ErrorPage from './pages/error-page';
+import Home from './pages/Home';
+import Authors from './pages/Authors';
+import Jokes from './pages/Jokes';
+import ErrorPage from './pages/ErrorPage';
 
 export const routes = [
   {
@@ -20,13 +20,11 @@ export const routes = [
     element: <Authors />,
     path: '/authors',
     name: 'authors',
-    loader: fetchAuthors,
   },
   {
     element: <Jokes />,
     path: '/:authors?/:authorId?/jokes',
     name: 'joke',
-    loader: fetchJokes,
   },
   {
     element: <ErrorPage />,
@@ -44,7 +42,6 @@ const router = createBrowserRouter([
       path: route.path === '/' ? undefined : route.path,
       name: route.name,
       element: route.element,
-      loader: route.loader ? route.loader : undefined,
       errorElement: <ErrorPage />,
       nodeRef: createRef(),
     })),
