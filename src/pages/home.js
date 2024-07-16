@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-// import '../assets/styles/home.css';
+import '../assets/styles/home.css';
 
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
