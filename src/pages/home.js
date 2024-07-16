@@ -1,4 +1,4 @@
-import { Routes, Route, Outlet, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import '../assets/styles/home.css';
 
 import Button from 'react-bootstrap/Button';
