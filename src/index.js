@@ -8,7 +8,7 @@ import App from './App';
 import Home from './pages/home';
 import Authors from './pages/authors';
 import Jokes from './pages/jokes';
-import ErrorPage from './pages/errorPage';
+import ErrorPage from './pages/error_page';
 
 export const routes = [
   {
