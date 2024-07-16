@@ -58,7 +58,7 @@ export default function Jokes() {
             ? data.jokes.length
             : data['hydra:totalItems'];
           setJokes(data.jokes ? data.jokes : data['hydra:member']);
-          console.log(data)
+          console.log(data);
         })
         .catch((error) => console.log(error));
     } catch (error) {

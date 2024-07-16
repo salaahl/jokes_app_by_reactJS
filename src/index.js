@@ -5,10 +5,10 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 
 import App from './App';
-import Home from './pages/Home';
-import Authors from './pages/Authors';
-import Jokes from './pages/Jokes';
-import ErrorPage from './pages/ErrorPage';
+import Home from './pages/home';
+import Authors from './pages/authors';
+import Jokes from './pages/jokes';
+import ErrorPage from './pages/errorPage';
 
 export const routes = [
   {
