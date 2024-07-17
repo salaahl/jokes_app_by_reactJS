@@ -58,7 +58,6 @@ export default function Jokes() {
             ? data.jokes.length
             : data['hydra:totalItems'];
           setJokes(data.jokes ? data.jokes : data['hydra:member']);
-          console.log(data);
         })
         .catch((error) => console.log(error));
     } catch (error) {
@@ -96,12 +95,12 @@ export default function Jokes() {
 
   /*
    * Stock de blagues terminé même après appel au fetch :
-   * Je multiplie la valeur de la page par le nombre de résultats par page (accès à la page via la route /jokes)
+   * Je vérifie que le numéro de page est différent de 0 et que la variable est vide (accès à la page via la route /jokes)
    * OU
    * Je compare la valeur de l'index au total des blagues chargées (accès à la page via la route authors/id/jokes)
    */
   if (
-    (page.current !== 1 && page.current * itemsPerPage > totalItems.current) ||
+    (page.current !== 0 && jokes.length === 0) ||
     (index !== 0 && index === totalItems.current)
   ) {
     endRef.current = true; // On passe a la fin de partie avec le setEnd
