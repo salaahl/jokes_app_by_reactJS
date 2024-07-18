@@ -41,7 +41,7 @@ export default function Home() {
             </Button>
           </Card.Body>
         </Card>
-        <div className="fw-light">OU</div>
+        <div className="text fw-light">OU</div>
         <Card>
           <Card.Header>Blagues au hasard</Card.Header>
           <Card.Body>

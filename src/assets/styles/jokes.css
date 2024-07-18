@@ -1,11 +1,10 @@
 .joke-container {
-  height: 60vh;
+  min-height: 60vh;
   width: auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: auto;
 }
 
 .card {
@@ -47,7 +46,7 @@
   align-items: center;
 }
 
-.btn {
+.joke-container .btn {
   height: 60px;
   width: 45%;
   font-weight: 500;

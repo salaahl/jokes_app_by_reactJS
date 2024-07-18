@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 body {
   --bs-body-font-family: 'Quicksand', sans-serif;
   font-optical-sizing: auto;

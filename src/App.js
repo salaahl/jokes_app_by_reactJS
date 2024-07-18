@@ -30,12 +30,8 @@ export default function App() {
   return (
     <div id="App">
       <header id="App-header">
-        {location.key !== 'default' && location.pathname !== '/' ? (
+        {location.key !== 'default' ?? (
           <button onClick={() => navigate(-1)}>
-            <FontAwesomeIcon icon={faArrowLeftLong} />
-          </button>
-        ) : (
-          <button onClick={() => navigate(`/`)}>
             <FontAwesomeIcon icon={faArrowLeftLong} />
           </button>
         )}
@@ -69,7 +65,26 @@ export default function App() {
         </SwitchTransition>
       </main>
 
-      <footer id="App-footer"></footer>
+      <footer id="App-footer" class="w-full py-4">
+        <div class="flex flex-wrap justify-center items-center max-w-screen-xl py-4 rounded-lg overflow-hidden">
+          <nav class="flex flex-wrap justify-center">
+            <div class="px-2 md:px-6">
+              <Link to={`/`} class="text-gray-500 hover:text-gray-900">
+                À propos de nous
+              </Link>
+            </div>
+            <div class="px-2 md:px-6">
+              <Link to={`/`} class="text-gray-500 hover:text-gray-900">
+                Mentions légales
+              </Link>
+            </div>
+          </nav>
+          <div class="px-2 md:px-6 text-sm text-center text-gray-500 hover:text-gray-900">
+            <a href="https://www.linkedin.com/in/salaha-sokhona/" target="_blank">© 2024 Salaha Sokhona. Tous droits
+              réservés.</a>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

@@ -1,3 +1,7 @@
+:root {
+  --padding-x: 20px;
+}
+
 #App {
   max-width: 1280px;
   margin: auto;
@@ -9,6 +13,7 @@
   justify-content: center;
   align-items: center;
   height: 20vh;
+  min-height: 100px;
 }
 
 #App-header button {
@@ -20,7 +25,7 @@
 }
 
 #App-header > button > svg {
-  height: 30px;
+  height: 3vh;
 }
 
 #App-header a {
@@ -46,6 +51,12 @@ a:has(#App-logo) {
   width: 100%;
   padding: 0 15px;
   overflow-x: hidden;
+}
+
+#App-footer > div {
+  margin-left: var(--padding-x);
+  margin-right: var(--padding-x);
+  backdrop-filter: contrast(0.95);
 }
 
 .page-loader {
@@ -117,20 +128,25 @@ a:has(#App-logo) {
 
 @media (min-width: 768px) {
   #App-main {
-    padding: 0 20px;
+    padding: 0 var(--padding-x);
   }
 
   #App-header > button {
-    left: 20px;
+    left: var(--padding-x);
   }
 }
 
 @media (min-width: 1320px) {
+  #App-header > button {
+    left: 0px;
+  }
+
   #App-main {
     padding: 0px;
   }
 
-  #App-header > button {
-    left: 0px;
+  #App-footer > div {
+    margin-left: 0%;
+    margin-right: 0%;
   }
 }
