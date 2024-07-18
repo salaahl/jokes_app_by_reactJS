@@ -1,4 +1,4 @@
-import { routes } from './index';
+import { useEffect } from "react";
 import {
   Link,
   useLocation,
@@ -7,6 +7,7 @@ import {
   useOutlet,
 } from 'react-router-dom';
 import { CSSTransition, SwitchTransition } from 'react-transition-group';
+import { routes } from './index';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
@@ -26,6 +27,10 @@ export default function App() {
   const currentOutlet = useOutlet();
   const { nodeRef } =
     routes.find((route) => route.path === location.pathname) ?? {};
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
 
   return (
     <div id="App">
