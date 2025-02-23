@@ -30,6 +30,8 @@
 
 .answer {
   margin: 5% 0;
+  font-size: smaller;
+  font-weight: 500;
 }
 
 .answer.hidden {

@@ -5,18 +5,18 @@ import {
   useNavigate,
   useNavigation,
   useOutlet,
-} from 'react-router-dom';
-import { CSSTransition, SwitchTransition } from 'react-transition-group';
-import { routes } from './index';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './App.css';
+} from "react-router-dom";
+import { CSSTransition, SwitchTransition } from "react-transition-group";
+import { routes } from "./index";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./App.css";
 
-import Loader from './components/Loader';
+import Loader from "./components/Loader";
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { faSmile } from '@fortawesome/free-regular-svg-icons';
-import { faArrowLeftLong } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faSmile } from "@fortawesome/free-regular-svg-icons";
+import { faArrowLeftLong } from "@fortawesome/free-solid-svg-icons";
 
 library.add(faArrowLeftLong, faSmile);
 
@@ -35,7 +35,7 @@ export default function App() {
   return (
     <div id="App">
       <header id="App-header">
-        {location.key !== 'default' ?? (
+        {location.key !== "default" ?? (
           <button onClick={() => navigate(-1)}>
             <FontAwesomeIcon icon={faArrowLeftLong} />
           </button>
@@ -63,30 +63,35 @@ export default function App() {
           >
             {(state) => (
               <div ref={nodeRef} className="page">
-                {navigation.state === 'loading' ? <Loader /> : currentOutlet}
+                {navigation.state === "loading" ? <Loader /> : currentOutlet}
               </div>
             )}
           </CSSTransition>
         </SwitchTransition>
       </main>
 
-      <footer id="App-footer" class="w-full py-4">
-        <div class="flex flex-wrap justify-center items-center max-w-screen-xl py-4 rounded-lg overflow-hidden">
-          <nav class="flex flex-wrap justify-center">
-            <div class="px-2 md:px-6">
-              <Link to={`/`} class="text-gray-500 hover:text-gray-900">
+      <footer id="App-footer" className="w-full py-4">
+        <div className="flex flex-wrap justify-center items-center max-w-screen-xl py-4 rounded-lg overflow-hidden">
+          <nav className="flex flex-wrap justify-center">
+            <div className="px-2 md:px-6">
+              <Link to={`/`} className="text-gray-500 hover:text-gray-900">
                 À propos de nous
               </Link>
             </div>
-            <div class="px-2 md:px-6">
-              <Link to={`/`} class="text-gray-500 hover:text-gray-900">
+            <div className="px-2 md:px-6">
+              <Link to={`/`} className="text-gray-500 hover:text-gray-900">
                 Mentions légales
               </Link>
             </div>
           </nav>
-          <div class="px-2 md:px-6 text-sm text-center text-gray-500 hover:text-gray-900">
-            <a href="https://www.linkedin.com/in/salaha-sokhona/" target="_blank">© 2024 Salaha Sokhona. Tous droits
-              réservés.</a>
+          <div className="px-2 md:px-6 text-sm text-center text-gray-500 hover:text-gray-900">
+            <a
+              href="https://www.linkedin.com/in/salaha-sokhona/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              © 2024 Salaha Sokhona. Tous droits réservés.
+            </a>
           </div>
         </div>
       </footer>
