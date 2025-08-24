@@ -1,7 +1,7 @@
-import React, { createRef, useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
-import '../assets/styles/authors.css';
-import Loader from '../components/Loader';
+import React, { createRef, useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
+import "../assets/styles/authors.css";
+import Loader from "../components/Loader";
 
 export default function Authors() {
   let showLoaderRef = useRef(true);
@@ -12,11 +12,13 @@ export default function Authors() {
 
   const fetchAuthors = async () => {
     try {
-      const f = await fetch('https://salaha-sokhona-jokes-api-f5beaadaebe1.herokuapp.com/api/authors');
+      const f = await fetch(
+        "https://jokes-api-platform.onrender.com/api/authors"
+      );
       const response = await f.json();
-      setAuthors(response['hydra:member']);
+      setAuthors(response["hydra:member"]);
     } catch (error) {
-      console.error('Erreur lors de la récupération des auteurs :', error);
+      console.error("Erreur lors de la récupération des auteurs :", error);
     }
   };
 

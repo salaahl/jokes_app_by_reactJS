@@ -1,14 +1,14 @@
-import React, { createRef, useEffect, useRef, useState } from 'react';
-import { CSSTransition } from 'react-transition-group';
-import '../assets/styles/jokes.css';
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { faSmile } from '@fortawesome/free-regular-svg-icons';
+import React, { createRef, useEffect, useRef, useState } from "react";
+import { CSSTransition } from "react-transition-group";
+import "../assets/styles/jokes.css";
+import Button from "react-bootstrap/Button";
+import Card from "react-bootstrap/Card";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faSmile } from "@fortawesome/free-regular-svg-icons";
 
-import Loader from '../components/Loader';
-import EndJokes from '../components/EndJokes';
+import Loader from "../components/Loader";
+import EndJokes from "../components/EndJokes";
 
 library.add(faSmile);
 
@@ -36,18 +36,21 @@ export default function Jokes() {
     page.current++;
 
     // Cas 1 : pas de paramètre renseigné donc blague random
-    if (url.pathname === '/jokes') {
+    if (url.pathname === "/jokes") {
       route =
-        'https://salaha-sokhona-jokes-api-f5beaadaebe1.herokuapp.com/api/jokes?page=' +
+        "https://jokes-api-platform.onrender.com/api/jokes?page=" +
         page.current +
-        '&itemsPerPage=' +
+        "&itemsPerPage=" +
         itemsPerPage;
     }
 
     // Cas 2 : paramètre de l'auteur renseigné dans l'url DONC blague reliée à un auteur
     else {
-      authorId = url.href.split('/')[4];
-      route = 'https://salaha-sokhona-jokes-api-f5beaadaebe1.herokuapp.com/api/authors/' + authorId + '?jokes';
+      authorId = url.href.split("/")[4];
+      route =
+        "https://jokes-api-platform.onrender.com/api/authors/" +
+        authorId +
+        "?jokes";
     }
 
     try {
@@ -56,12 +59,12 @@ export default function Jokes() {
         .then((data) => {
           totalItems.current = data.jokes
             ? data.jokes.length
-            : data['hydra:totalItems'];
-          setJokes(data.jokes ? data.jokes : data['hydra:member']);
+            : data["hydra:totalItems"];
+          setJokes(data.jokes ? data.jokes : data["hydra:member"]);
         })
         .catch((error) => console.log(error));
     } catch (error) {
-      console.error('Erreur lors de la sélection des blagues :', error);
+      console.error("Erreur lors de la sélection des blagues :", error);
     }
   };
 
@@ -82,7 +85,7 @@ export default function Jokes() {
 
   // Si toutes les blagues chargées ont déjà été affichées :
   if (jokes.length !== 0 && index >= jokes.length) {
-    if (url.pathname === '/jokes') {
+    if (url.pathname === "/jokes") {
       // On remet l'index à 0 et on charge une nouvelle page via le useEffect qui surveille la valeur de l'index
       setIndex(0);
     }
