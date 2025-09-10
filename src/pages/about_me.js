@@ -11,7 +11,7 @@ library.add(faUser, faShuffle);
 export default function AboutMe() {
   return (
     <div>
-        <h1>A propos de moi</h1>
+        <h1 id="title">A propos de moi</h1>
     </div>
   );
 }

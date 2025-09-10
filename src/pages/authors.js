@@ -42,7 +42,7 @@ export default function Authors() {
 
   return (
     <div ref={contentRef}>
-      <h1>Auteurs</h1>
+      <h1 id="title">Auteurs</h1>
       <div id="authors">
         {authors.map((author) => (
           <div key={author.name} className="author">

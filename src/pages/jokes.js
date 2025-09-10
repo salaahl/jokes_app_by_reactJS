@@ -137,7 +137,7 @@ export default function Jokes() {
           classNames="component"
           unmountOnExit
         >
-          <Card ref={nodeRef}>
+          <Card ref={nodeRef} className="z-0">
             <Card.Header>Joke</Card.Header>
             <Card.Body>
               <Card.Title>
@@ -152,11 +152,11 @@ export default function Jokes() {
                 )}
               </Card.Text>
               <div className="buttons">
-                <Button variant="dark" onClick={() => setAnswer(true)}>
+                <button className="nav-button" onClick={() => setAnswer(true)}>
                   Afficher la réponse
-                </Button>
-                <Button
-                  variant="dark"
+                </button>
+                <button
+                  className="nav-button"
                   onClick={() => [
                     setAnswer(false),
                     setIndex(index + 1),
@@ -164,7 +164,7 @@ export default function Jokes() {
                   ]}
                 >
                   Nouvelle blague
-                </Button>
+                </button>
               </div>
             </Card.Body>
           </Card>

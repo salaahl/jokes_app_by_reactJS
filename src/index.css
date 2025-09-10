@@ -2,16 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  --bs-body-font-family: 'Quicksand', sans-serif;
+.body {
+  --bs-body-font-family: "Quicksand", sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-weight: 500;
+  font-size: large;
+  color: white;
+  background-color: #343a40;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 
@@ -24,6 +28,55 @@ h6 {
   width: fit-content;
 }
 
-h1 {
-  font-weight: normal;
+#title {
+  font-weight: bold;
+  font-size: xxx-large;
+}
+
+#title > span {
+  background-color: deeppink;
+}
+
+.subtitle {
+  font-size: xx-large;
+}
+
+.body .nav-button {
+  font-size: 16px;
+  letter-spacing: 1px;
+  padding: 13px 20px 13px;
+  outline: 0;
+  border: 2px dashed black;
+  cursor: pointer;
+  position: relative;
+  background-color: rgba(0, 0, 0, 0);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  display: block;
+  border-radius: 99px;
+}
+
+.body .nav-button:after {
+  content: "";
+  background-color: #edafb8;
+  width: 100%;
+  z-index: -1;
+  position: absolute;
+  height: 100%;
+  top: 7px;
+  left: 7px;
+  transition: 0.2s;
+  border-radius: 99px;
+}
+
+.body .nav-button:hover:after {
+  top: 0px;
+  left: 0px;
+}
+
+@media (min-width: 768px) {
+  .body .nav-button {
+    padding: 13px 39px 13px;
+  }
 }

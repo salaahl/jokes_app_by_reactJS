@@ -29,29 +29,34 @@
 }
 
 .answer {
-  margin: 5% 0;
+  width: fit-content;
+  margin: 5% auto;
+  padding: 5px 10px;
   font-size: smaller;
   font-weight: 500;
+  background: aquamarine;
+  border-radius: 10px;
 }
 
 .answer.hidden {
-  margin: 5% 0;
-  padding: 5% 0;
   text-align: center;
   background-color: whitesmoke;
-  opacity: 0.2;
+  opacity: 0;
 }
 
 .buttons {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-around;
 }
 
-.joke-container .btn {
+.joke-container .nav-button {
   height: 60px;
-  width: 45%;
-  font-weight: 500;
+  width: 100%;
+}
+
+.joke-container .nav-button:first-of-type {
+  margin-bottom: 15px;
 }
 
 /* Components animations */
@@ -71,4 +76,11 @@
 .component-exit-active {
   opacity: 0;
   transition: opacity 500ms;
+}
+
+@media (min-width: 768px) {
+  .joke-container .nav-button {
+    width: 45%;
+    margin: 0;
+  }
 }

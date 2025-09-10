@@ -1,29 +1,30 @@
 #presentation {
-  margin: 4% 0 10% 0;
+  margin: 10% 0 15% 0;
+  text-align: justify;
 }
 
-#cards > .card {
+#cards .text {
+  margin: 5% auto;
   text-align: center;
-}
-
-#cards > .text {
-  margin: 10% 0;
-  text-align: center;
-}
-
-#cards a {
-  text-decoration: none;
-  color: inherit;
 }
 
 @media (min-width: 768px) {
-  #cards {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  #presentation {
+    margin: 5% 0 10% 0;
+    text-align: justify;
   }
 
-  #cards > .card {
-    width: 35%;
+  #cards {
+    align-items: stretch;
+  }
+
+  #cards .card {
+    margin: 0;
+  }
+
+  #cards .card .card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
 }

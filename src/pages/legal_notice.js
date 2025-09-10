@@ -9,7 +9,7 @@ library.add(faUser, faShuffle);
 export default function LegalNotice() {
   return (
     <div>
-        <h1>Mentions légales</h1>
+        <h1 id="title">Mentions légales</h1>
     </div>
   );
 }

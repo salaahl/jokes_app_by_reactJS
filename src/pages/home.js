@@ -1,13 +1,12 @@
-import { Link } from 'react-router-dom';
-import '../assets/styles/home.css';
+import { Link } from "react-router-dom";
+import "../assets/styles/home.css";
 
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
+import Card from "react-bootstrap/Card";
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { faUser } from '@fortawesome/free-regular-svg-icons';
-import { faShuffle } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faUser } from "@fortawesome/free-regular-svg-icons";
+import { faShuffle } from "@fortawesome/free-solid-svg-icons";
 
 library.add(faUser, faShuffle);
 
@@ -15,8 +14,10 @@ export default function Home() {
   return (
     <div>
       <section id="head">
-        <h1>Bienvenue sur Blagues & Sourires !</h1>
-        <h3>Le lieu où le rire est roi !</h3>
+        <h1 id="title">
+          <span>Bienvenue sur Blagues & Sourires !</span>
+        </h1>
+        <h2 className="subtitle">Le lieu où le rire est roi !</h2>
       </section>
       <p id="presentation">
         Vous cherchez une bonne dose de bonne humeur ? Vous êtes au bon endroit
@@ -26,7 +27,7 @@ export default function Home() {
         drôles, vous trouverez de quoi égayer votre journée.
       </p>
       <section id="cards">
-        <Card>
+        <Card className="z-0">
           <Card.Header>Blagues par auteur</Card.Header>
           <Card.Body>
             <Card.Title>
@@ -36,13 +37,13 @@ export default function Home() {
               Vous avez un humoriste préféré ? Retrouvez facilement toutes ses
               blagues dans notre rubrique dédiée.
             </Card.Text>
-            <Button variant="dark">
-              <Link to={`/authors`}>Blagues par auteur</Link>
-            </Button>
+            <Link to={`/authors`} className="nav-button">
+              Blagues par auteur
+            </Link>
           </Card.Body>
         </Card>
         <div className="text fw-light">OU</div>
-        <Card>
+        <Card className="z-0">
           <Card.Header>Blagues au hasard</Card.Header>
           <Card.Body>
             <Card.Title>
@@ -52,9 +53,9 @@ export default function Home() {
               Besoin d'une surprise ? Laissez le hasard choisir pour vous et
               découvrez une blague aléatoire qui vous fera sourire.
             </Card.Text>
-            <Button variant="dark">
-              <Link to={`/jokes`}>Blagues au hasard</Link>
-            </Button>
+            <Link to={`/jokes`} className="nav-button">
+              Blagues au hasard
+            </Link>
           </Card.Body>
         </Card>
       </section>
