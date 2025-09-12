@@ -1,4 +1,4 @@
-import React, { createRef, useEffect, useRef, useState } from "react";
+import { createRef, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import "../assets/styles/authors.css";
 import Loader from "../components/Loader";

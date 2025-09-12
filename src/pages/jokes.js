@@ -1,7 +1,6 @@
-import React, { createRef, useEffect, useRef, useState } from "react";
+import { createRef, useEffect, useRef, useState } from "react";
 import { CSSTransition } from "react-transition-group";
 import "../assets/styles/jokes.css";
-import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";

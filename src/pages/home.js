@@ -50,8 +50,7 @@ export default function Home() {
               <FontAwesomeIcon icon="fa-solid fa-shuffle" />
             </Card.Title>
             <Card.Text>
-              Besoin d'une surprise ? Laissez le hasard choisir pour vous et
-              découvrez une blague aléatoire qui vous fera sourire.
+              Besoin d'une surprise ? Laissez le hasard choisir pour vous.
             </Card.Text>
             <Link to={`/jokes`} className="nav-button">
               Blagues au hasard
