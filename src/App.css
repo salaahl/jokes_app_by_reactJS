@@ -68,12 +68,7 @@ a:has(#App-logo) {
 #App-main .card > .card-header {
   color: white;
   background-color: #b0c4b1;
-  border-bottom: 4px solid #343a40;
-}
-
-#App-main a {
-  text-decoration: none;
-  color: inherit;
+  border-bottom: 6px solid #343a40;
 }
 
 #App-footer > div {

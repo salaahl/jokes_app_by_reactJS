@@ -1,4 +1,5 @@
 import { createRef, useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import { CSSTransition } from "react-transition-group";
 import "../assets/styles/jokes.css";
 import Card from "react-bootstrap/Card";
@@ -47,9 +48,7 @@ export default function Jokes() {
     else {
       authorId = url.href.split("/")[4];
       route =
-        "https://jokes-api-platform.onrender.com/api/authors/" +
-        authorId +
-        "?jokes";
+        "https://jokes-api-platform.onrender.com/api/jokes?author=" + authorId;
     }
 
     try {
@@ -136,37 +135,50 @@ export default function Jokes() {
           classNames="component"
           unmountOnExit
         >
-          <Card ref={nodeRef} className="z-0">
-            <Card.Header>Joke</Card.Header>
-            <Card.Body>
-              <Card.Title>
-                <FontAwesomeIcon icon="fa-regular fa-face-smile" />
-              </Card.Title>
-              <Card.Text>
-                <span>{joke.content}</span>
-                {answer === false ? (
-                  <span className="answer hidden">Réponse</span>
-                ) : (
-                  <span className="answer">Réponse: {joke.answer}</span>
-                )}
-              </Card.Text>
-              <div className="buttons">
-                <button className="nav-button" onClick={() => setAnswer(true)}>
-                  Afficher la réponse
-                </button>
-                <button
-                  className="nav-button"
-                  onClick={() => [
-                    setAnswer(false),
-                    setIndex(index + 1),
-                    setShowJoke(false),
-                  ]}
-                >
-                  Nouvelle blague
-                </button>
-              </div>
-            </Card.Body>
-          </Card>
+          <div ref={nodeRef} className="joke-inner w-full">
+            <Card className="z-0">
+              <Card.Header>{joke.author.name}</Card.Header>
+              <Card.Body>
+                <Card.Title>
+                  <FontAwesomeIcon icon="fa-regular fa-face-smile" />
+                </Card.Title>
+                <Card.Text>
+                  <span>{joke.content}</span>
+                  {answer === false ? (
+                    <span className="answer hidden">Réponse</span>
+                  ) : (
+                    <span className="answer">Réponse: {joke.answer}</span>
+                  )}
+                </Card.Text>
+                <div className="buttons">
+                  <button
+                    className="nav-button"
+                    onClick={() => setAnswer(true)}
+                  >
+                    Afficher la réponse
+                  </button>
+                  <button
+                    className="nav-button"
+                    onClick={() => [
+                      setAnswer(false),
+                      setIndex(index + 1),
+                      setShowJoke(false),
+                    ]}
+                  >
+                    Nouvelle blague
+                  </button>
+                </div>
+              </Card.Body>
+            </Card>
+            {url.pathname === "/jokes" && (
+              <Link
+                to={`/authors/${joke.author.id}/jokes`}
+                className="block mt-8 mx-auto text-center underline decoration-[4px] decoration-[deeppink]"
+              >
+                Plus de blagues de cet auteur
+              </Link>
+            )}
+          </div>
         </CSSTransition>
       </div>
     </div>
