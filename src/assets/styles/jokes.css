@@ -24,6 +24,11 @@
   margin-bottom: 10%;
 }
 
+.card-title > img {
+  height: 50px;
+  margin: auto;
+}
+
 .card-text > * {
   display: block;
 }
@@ -33,15 +38,42 @@
   margin: 5% auto;
   padding: 5px 10px;
   font-size: smaller;
-  font-weight: 500;
-  background: aquamarine;
+  font-weight: 600;
+  color: whitesmoke;
   border-radius: 10px;
+  background: linear-gradient(to right, #b0c4b1 50%, whitesmoke 50%);
+  background-size: 205% 100%;
+  background-position: 0% 0;
+  transition: background-position 1s
+    linear(
+      0 0%,
+      0 1.8%,
+      0.01 3.6%,
+      0.03 6.35%,
+      0.07 9.1%,
+      0.13 11.4%,
+      0.19 13.4%,
+      0.27 15%,
+      0.34 16.1%,
+      0.54 18.35%,
+      0.66 20.6%,
+      0.72 22.4%,
+      0.77 24.6%,
+      0.81 27.3%,
+      0.85 30.4%,
+      0.88 35.1%,
+      0.92 40.6%,
+      0.94 47.2%,
+      0.96 55%,
+      0.98 64%,
+      0.99 74.4%,
+      1 86.4%,
+      1 100%
+    );
 }
 
 .answer.hidden {
-  text-align: center;
-  background-color: whitesmoke;
-  opacity: 0;
+  background-position: 100% 0;
 }
 
 .buttons {

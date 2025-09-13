@@ -23,9 +23,9 @@ export default function Jokes() {
   let showLoaderRef = useRef(true);
   let endRef = useRef(false);
   const contentRef = createRef();
-  const nodeRef = createRef();
+  const jokeRef = createRef();
 
-  const [jokes, setJokes] = useState([]); // Contient la liste des blagues
+  const [jokes, setJokes] = useState([]);
   const [index, setIndex] = useState(0);
   const [joke, setJoke] = useState({});
   const [answer, setAnswer] = useState(false);
@@ -60,7 +60,7 @@ export default function Jokes() {
             : data["hydra:totalItems"];
           setJokes(data.jokes ? data.jokes : data["hydra:member"]);
         })
-        .catch((error) => console.log(error));
+        .catch((error) => console.error(error));
     } catch (error) {
       console.error("Erreur lors de la sélection des blagues :", error);
     }
@@ -112,7 +112,7 @@ export default function Jokes() {
   }
 
   if (end.current === true) {
-    return <EndJokes in={showJoke} nodeRef={nodeRef} componentRef={nodeRef} />;
+    return <EndJokes in={showJoke} nodeRef={jokeRef} componentRef={jokeRef} />;
   }
 
   if (showLoaderRef.current === true) {
@@ -130,25 +130,23 @@ export default function Jokes() {
       <div className="joke-container">
         <CSSTransition
           in={showJoke}
-          nodeRef={nodeRef}
+          nodeRef={jokeRef}
           timeout={1500}
           classNames="component"
           unmountOnExit
         >
-          <div ref={nodeRef} className="joke-inner w-full">
+          <div ref={jokeRef} className="joke-inner w-full">
             <Card className="z-0">
               <Card.Header>{joke.author.name}</Card.Header>
               <Card.Body>
                 <Card.Title>
-                  <FontAwesomeIcon icon="fa-regular fa-face-smile" />
+                  <img src="/laugh_icon.png" alt="ha ha" />
                 </Card.Title>
                 <Card.Text>
                   <span>{joke.content}</span>
-                  {answer === false ? (
-                    <span className="answer hidden">Réponse</span>
-                  ) : (
-                    <span className="answer">Réponse: {joke.answer}</span>
-                  )}
+                  <span className={`answer ${answer ? "" : "hidden"}`}>
+                    {joke.answer}
+                  </span>
                 </Card.Text>
                 <div className="buttons">
                   <button
