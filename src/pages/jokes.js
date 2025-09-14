@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { CSSTransition } from "react-transition-group";
 import "../assets/styles/jokes.css";
 import Card from "react-bootstrap/Card";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faSmile } from "@fortawesome/free-regular-svg-icons";
 
@@ -35,10 +34,10 @@ export default function Jokes() {
   const fetchJokes = async () => {
     page.current++;
 
-    // Cas 1 : pas de paramètre renseigné donc blague random
+    // Cas 1 : pas de paramètre renseigné donc blagues randoms
     if (url.pathname === "/jokes") {
       route =
-        "https://jokes-api-platform.onrender.com/api/jokes?page=" +
+        "https://jokes-api-platform.onrender.com/api/jokes/random?page=" +
         page.current +
         "&itemsPerPage=" +
         itemsPerPage;
