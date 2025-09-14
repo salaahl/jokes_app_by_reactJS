@@ -61,11 +61,9 @@ export default function App() {
             classNames="page"
             unmountOnExit
           >
-            {(state) => (
-              <div ref={nodeRef} className="page">
-                {navigation.state === "loading" ? <Loader /> : currentOutlet}
-              </div>
-            )}
+            <div ref={nodeRef} className="page">
+              {navigation.state === "loading" ? <Loader /> : currentOutlet}
+            </div>
           </CSSTransition>
         </SwitchTransition>
       </main>

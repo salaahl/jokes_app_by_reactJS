@@ -1,19 +1,20 @@
-import { CSSTransition } from 'react-transition-group';
+import { forwardRef } from "react";
+import { CSSTransition } from "react-transition-group";
 
-export default function Loader(props) {
+const Loader = forwardRef(({ in: inProp }, ref) => {
   return (
-    <div>
-      <CSSTransition
-        in={props.in}
-        nodeRef={props.contentRef}
-        timeout={1500}
-        classNames="component"
-        unmountOnExit
-      >
-        <div className="page-loader" ref={props.contentRef}>
-          <div className="loader"></div>
-        </div>
-      </CSSTransition>
-    </div>
+    <CSSTransition
+      in={inProp}
+      nodeRef={ref}
+      timeout={1500}
+      classNames="component"
+      unmountOnExit
+    >
+      <div className="page-loader" ref={ref}>
+        <div className="loader"></div>
+      </div>
+    </CSSTransition>
   );
-}
+});
+
+export default Loader;

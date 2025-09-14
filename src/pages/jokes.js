@@ -21,7 +21,7 @@ export default function Jokes() {
 
   let showLoaderRef = useRef(true);
   let endRef = useRef(false);
-  const contentRef = createRef();
+  const contentRef = useRef(null);
   const jokeRef = createRef();
 
   const [jokes, setJokes] = useState([]);
@@ -115,13 +115,7 @@ export default function Jokes() {
   }
 
   if (showLoaderRef.current === true) {
-    return (
-      <Loader
-        in={showLoaderRef.current}
-        contentRef={contentRef}
-        ref={contentRef}
-      />
-    );
+    return <Loader ref={contentRef} in={showLoaderRef.current} />;
   }
 
   return (

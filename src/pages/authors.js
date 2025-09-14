@@ -1,11 +1,11 @@
-import { createRef, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import "../assets/styles/authors.css";
 import Loader from "../components/Loader";
 
 export default function Authors() {
   let showLoaderRef = useRef(true);
-  const contentRef = createRef();
+  const contentRef = useRef(null);
 
   const [authors, setAuthors] = useState([]);
   let firstLetter;
@@ -27,13 +27,7 @@ export default function Authors() {
   }, []);
 
   if (authors.length === 0) {
-    return (
-      <Loader
-        in={showLoaderRef.current}
-        contentRef={contentRef}
-        ref={contentRef}
-      />
-    );
+    return <Loader ref={contentRef} in={showLoaderRef.current} />;
   }
 
   if (authors.length !== 0) {
