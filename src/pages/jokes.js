@@ -34,10 +34,10 @@ export default function Jokes() {
   const fetchJokes = async () => {
     page.current++;
 
-    // Cas 1 : pas de paramètre renseigné donc blagues randoms
+    // Cas 1 : pas de paramètre renseigné donc blague random
     if (url.pathname === "/jokes") {
       route =
-        "https://jokes-api-platform.onrender.com/api/jokes/random?page=" +
+        "https://jokes-api-platform.onrender.com/api/jokes?page=" +
         page.current +
         "&itemsPerPage=" +
         itemsPerPage;
