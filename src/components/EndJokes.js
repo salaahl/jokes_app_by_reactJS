@@ -1,25 +1,30 @@
-import { Link } from 'react-router-dom';
-import { CSSTransition } from 'react-transition-group';
-import '../assets/styles/jokes.css';
+import { Link } from "react-router-dom";
+import { CSSTransition } from "react-transition-group";
+import { forwardRef } from "react";
+import "../assets/styles/jokes.css";
 
-export default function EndJokes(props) {
+const EndJokes = forwardRef((props, ref) => {
   return (
     <div>
       <CSSTransition
-        in={props.in}
-        nodeRef={props.nodeRef}
+        in={true}
+        nodeRef={ref}
         timeout={1500}
         classNames="component"
         unmountOnExit
       >
-        <div className="joke-container" ref={props.componentRef}>
+        <div className="joke-container" ref={ref}>
           <div>Plus de blagues à venir...</div>
-          {window.location.pathname !== '/jokes' ?? (
-            <Link to={`/jokes`}>Blagues randoms</Link>
-          )}
-          <Link to={`/authors`}>Aller à la liste des auteurs</Link>
+          <Link
+            to={`/authors`}
+            className="block mt-8 mx-auto text-center underline decoration-[4px] decoration-[deeppink]"
+          >
+            Aller à la liste des auteurs
+          </Link>
         </div>
       </CSSTransition>
     </div>
   );
-}
+});
+
+export default EndJokes;

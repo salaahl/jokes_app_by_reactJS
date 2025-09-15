@@ -1,14 +1,11 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState, useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 import "../assets/styles/authors.css";
 import Loader from "../components/Loader";
 
 export default function Authors() {
-  let showLoaderRef = useRef(true);
   const contentRef = useRef(null);
-
   const [authors, setAuthors] = useState([]);
-  let firstLetter;
 
   const fetchAuthors = async () => {
     try {
@@ -26,30 +23,35 @@ export default function Authors() {
     fetchAuthors();
   }, []);
 
-  if (authors.length === 0) {
-    return <Loader ref={contentRef} in={showLoaderRef.current} />;
-  }
+  // Toujours appeler useMemo avant tout return conditionnel
+  const authorsByLetter = useMemo(() => {
+    return authors.reduce((acc, author) => {
+      const letter = author.name[0].toUpperCase();
+      if (!acc[letter]) acc[letter] = [];
+      acc[letter].push(author);
+      return acc;
+    }, {});
+  }, [authors]);
 
-  if (authors.length !== 0) {
-    showLoaderRef.current = false;
+  // Afficher le loader tant que les auteurs ne sont pas chargés
+  if (authors.length === 0) {
+    return <Loader />;
   }
 
   return (
     <div ref={contentRef}>
       <h1 id="title">Auteurs</h1>
       <div id="authors">
-        {authors.map((author) => (
-          <div key={author.name} className="author">
-            {firstLetter !== Array.from(authors[0].name)[0] ? (
-              <h3 key={author.content} className="index">
-                {Array.from(author.name)[0]}
-              </h3>
-            ) : (
-              (firstLetter = Array.from(authors[0].name)[0])
-            )}
-            <li key={author.id}>
-              <Link to={`./${author.id}/jokes`}>{author.name}</Link>
-            </li>
+        {Object.entries(authorsByLetter).map(([letter, authors]) => (
+          <div key={letter} className="author-group">
+            <h3 className="index">{letter}</h3>
+            <ul className="pl-0">
+              {authors.map((author) => (
+                <li key={author.id}>
+                  <Link to={`./${author.id}/jokes`}>{author.name}</Link>
+                </li>
+              ))}
+            </ul>
           </div>
         ))}
       </div>

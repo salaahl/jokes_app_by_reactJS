@@ -1,10 +1,10 @@
 import { forwardRef } from "react";
 import { CSSTransition } from "react-transition-group";
 
-const Loader = forwardRef(({ in: inProp }, ref) => {
+const Loader = forwardRef((props, ref) => {
   return (
     <CSSTransition
-      in={inProp}
+      in={true}
       nodeRef={ref}
       timeout={1500}
       classNames="component"

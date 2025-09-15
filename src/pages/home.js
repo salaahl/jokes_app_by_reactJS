@@ -44,13 +44,14 @@ export default function Home() {
         </Card>
         <div className="text fw-light">OU</div>
         <Card className="z-0">
-          <Card.Header>Blagues au hasard</Card.Header>
+          <Card.Header>Toutes les blagues</Card.Header>
           <Card.Body>
             <Card.Title>
               <FontAwesomeIcon icon="fa-solid fa-shuffle" />
             </Card.Title>
             <Card.Text>
-              Besoin d'une surprise ? Laissez le hasard choisir pour vous.
+              Sinon, vous pouvez également vous divertir en jetant un oeil aux
+              dernières blagues ajoutées au catalogue.
             </Card.Text>
             <Link to={`/jokes`} className="nav-button">
               Blagues au hasard

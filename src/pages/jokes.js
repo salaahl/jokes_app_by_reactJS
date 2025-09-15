@@ -1,4 +1,4 @@
-import { createRef, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { CSSTransition } from "react-transition-group";
 import "../assets/styles/jokes.css";
@@ -13,109 +13,116 @@ library.add(faSmile);
 
 export default function Jokes() {
   const url = window.location;
-  let route;
-  let page = useRef(0);
-  const itemsPerPage = 15;
-  let totalItems = useRef(0);
-  let authorId;
+  const page = useRef(1); // Numéro de page pour la pagination
+  const totalItems = useRef(0); // Nombre total d'éléments (cas API Hydra)
 
-  let showLoaderRef = useRef(true);
-  let endRef = useRef(false);
+  const [jokes, setJokes] = useState([]); // Stock des blagues
+  const [index, setIndex] = useState(0); // Position actuelle dans le tableau de blagues
+  const [joke, setJoke] = useState({}); // Blague affichée
+  const [answer, setAnswer] = useState(false); // État pour la réponse (pas encore utilisé)
+  const [showJoke, setShowJoke] = useState(false); // Contrôle l’affichage de la blague
+  const [loading, setLoading] = useState(true); // Loader affiché au démarrage
+  const [end, setEnd] = useState(false); // Fin du stock de blagues
+
   const contentRef = useRef(null);
-  const jokeRef = createRef();
+  const jokeRef = useRef(null); // Référence pour l’animation de transition
+  const itemsPerPage = 15; // Nombre de blagues par page
 
-  const [jokes, setJokes] = useState([]);
-  const [index, setIndex] = useState(0);
-  const [joke, setJoke] = useState({});
-  const [answer, setAnswer] = useState(false);
-  const [showJoke, setShowJoke] = useState(false);
-  const [end, setEnd] = useState(endRef);
+  /*
+   * Fonction de récupération des blagues
+   * - Soit toutes les blagues (/jokes)
+   * - Soit les blagues liées à un auteur (/authors/{id}?jokes)
+   */
+  const fetchJokes = useCallback(async () => {
+    let route;
+    let authorId;
 
-  const fetchJokes = async () => {
-    page.current++;
-
-    // Cas 1 : pas de paramètre renseigné donc blague random
     if (url.pathname === "/jokes") {
-      route =
-        "https://jokes-api-platform.onrender.com/api/jokes?page=" +
-        page.current +
-        "&itemsPerPage=" +
-        itemsPerPage;
-    }
-
-    // Cas 2 : paramètre de l'auteur renseigné dans l'url DONC blague reliée à un auteur
-    else {
+      // Cas 1 : accès global aux blagues
+      route = `https://jokes-api-platform.onrender.com/api/jokes?page=${page.current}&itemsPerPage=${itemsPerPage}`;
+    } else {
+      // Cas 2 : accès aux blagues d’un auteur spécifique
       authorId = url.href.split("/")[4];
-      route =
-        "https://jokes-api-platform.onrender.com/api/jokes?author=" + authorId;
+      route = `https://jokes-api-platform.onrender.com/api/authors/${authorId}?jokes`;
     }
 
     try {
-      fetch(route)
-        .then((response) => response.json())
-        .then((data) => {
-          totalItems.current = data.jokes
-            ? data.jokes.length
-            : data["hydra:totalItems"];
-          setJokes(data.jokes ? data.jokes : data["hydra:member"]);
-        })
-        .catch((error) => console.error(error));
+      const response = await fetch(route);
+      const data = await response.json();
+
+      // Gestion du nombre total d’éléments
+      totalItems.current = data.jokes
+        ? data.jokes.length
+        : data["hydra:totalItems"];
+
+      // Récupération du tableau de blagues (selon la forme renvoyée par l’API)
+      const result = data.jokes ? data.jokes : data["hydra:member"];
+
+      // Normalisation pour uniformiser la structure de l’auteur
+      const normalized = result.map((j) => ({
+        ...j,
+        author: {
+          id: j.author?.id || data.id,
+          name: j.author?.name || data.name,
+        },
+      }));
+
+      setJokes(normalized);
     } catch (error) {
       console.error("Erreur lors de la sélection des blagues :", error);
     }
-  };
+  }, [url, itemsPerPage]);
 
+  /*
+   * Chargement des blagues
+   * Déclenché à chaque fois que l’index est remis à 0
+   */
   useEffect(() => {
-    // Sera lancé au chargement de la page et à chaque fois que l'index aura été réinitialisé
     if (index === 0) {
       fetchJokes();
     }
-  }, [index]);
-
-  if (jokes.length !== 0 && jokes.length > index) {
-    // Le timeout a été placé ici pour que l'animation ait le temps d'aller au bout
-    setTimeout(() => {
-      setJoke(jokes[index]);
-      setShowJoke(true);
-    }, 500);
-  }
-
-  // Si toutes les blagues chargées ont déjà été affichées :
-  if (jokes.length !== 0 && index >= jokes.length) {
-    if (url.pathname === "/jokes") {
-      // On remet l'index à 0 et on charge une nouvelle page via le useEffect qui surveille la valeur de l'index
-      setIndex(0);
-    }
-  }
-
-  // Affichage du loader en ouverture de page :
-  if (jokes.length !== 0 && Object.keys(joke).length !== 0) {
-    showLoaderRef.current = false;
-  }
+  }, [index, fetchJokes]);
 
   /*
-   * Stock de blagues terminé même après appel au fetch :
-   * Je vérifie que le numéro de page est différent de 0 et que la variable est vide (accès à la page via la route /jokes)
-   * OU
-   * Je compare la valeur de l'index au total des blagues chargées (accès à la page via la route authors/id/jokes)
+   * Affichage d’une nouvelle blague
+   * - Dépend de la valeur de l’index
+   * - Petit timeout pour laisser passer l’animation
    */
-  if (
-    (page.current !== 0 && jokes.length === 0) ||
-    (index !== 0 && index === totalItems.current)
-  ) {
-    endRef.current = true; // On passe a la fin de partie avec le setEnd
-    // Le timeout a été placé ici pour que l'animation ait le temps d'aller au bout
-    setTimeout(() => {
-      setShowJoke(true); // Affichera en réalité le EndJoke
-    }, 500);
+  useEffect(() => {
+    if (jokes.length > index) {
+      const timer = setTimeout(() => {
+        setJoke(jokes[index]);
+        setShowJoke(true);
+        if (loading) setLoading(false); // Fin du loader au demarrage
+      }, 500);
+      return () => clearTimeout(timer);
+    }
+  }, [jokes, index]);
+
+  /*
+   * Gestion de la pagination ou de la fin des blagues
+   * - Si on atteint la fin des blagues dans /jokes → nouvelle page
+   * - Si on atteint la fin dans /authors → affichage de EndJokes
+   */
+  useEffect(() => {
+    if (jokes.length !== 0 && index >= jokes.length) {
+      if (url.pathname === "/jokes") {
+        // Recharge une nouvelle page
+        page.current++;
+        setIndex(0);
+      } else if (index !== 0 && index === totalItems.current) {
+        setEnd(true);
+      }
+    }
+  }, [index, jokes, url.pathname]);
+
+  // --- RENDER ---
+  if (end) {
+    return <EndJokes ref={jokeRef} />;
   }
 
-  if (end.current === true) {
-    return <EndJokes in={showJoke} nodeRef={jokeRef} componentRef={jokeRef} />;
-  }
-
-  if (showLoaderRef.current === true) {
-    return <Loader ref={contentRef} in={showLoaderRef.current} />;
+  if (loading) {
+    return <Loader />;
   }
 
   return (
